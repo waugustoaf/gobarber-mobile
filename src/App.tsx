@@ -8,7 +8,7 @@ import { AppProvider } from './hooks';
 
 const App: React.FC = () => (
   <NavigationContainer>
-    <StatusBar barStyle="light-content" backgroundColor="#321e38" />
+    <StatusBar barStyle="light-content" backgroundColor="#321e38" translucent />
     <AppProvider>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#321e38' }}>
         <AuthRoutes />
