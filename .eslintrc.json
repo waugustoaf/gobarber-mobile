@@ -32,6 +32,7 @@
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "react/jsx-one-expression-per-line": "off",
+    "import/no-duplicates": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
     "import/extensions": [
       "error",

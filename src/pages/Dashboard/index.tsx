@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { ActivityIndicator, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useAuth } from '../../hooks/Auth';
 import { api } from '../../services/api';
@@ -8,6 +8,7 @@ import {
   Container,
   Header,
   HeaderTitle,
+  Loading,
   ProfileButton,
   ProviderAvatar,
   ProviderContainer,
@@ -29,17 +30,19 @@ export interface Provider {
 
 const Dashboard: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { navigate } = useNavigation();
 
   const navigateToProfile = useCallback(() => {
-    signOut();
-  }, [signOut]);
+    navigate('Profile');
+  }, [navigate]);
 
   useEffect(() => {
     api.get('/providers').then(response => {
       setProviders(response.data);
+      setLoading(false);
     });
   }, []);
 
@@ -49,6 +52,14 @@ const Dashboard: React.FC = () => {
     },
     [navigate],
   );
+
+  if (loading) {
+    return (
+      <Loading>
+        <ActivityIndicator size="large" color="#959991" />
+      </Loading>
+    );
+  }
 
   return (
     <>

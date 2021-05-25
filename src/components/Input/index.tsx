@@ -13,6 +13,7 @@ import { Container, Icon, TextInput } from './styles';
 interface InputProps extends TextInputProps {
   name: string;
   icon: string;
+  containerStyle?: {};
 }
 
 interface InputValueReference {
@@ -24,7 +25,7 @@ interface InputRef {
 }
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-  { name, icon, ...rest },
+  { name, icon, containerStyle = {}, ...rest },
   ref,
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,19 +53,11 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
       name: fieldName,
       path: 'value',
       ref: inputValueRef.current,
-      // setValue(ref: any, value) {
-      //   inputValueRef.current.value = value;
-      //   inputElementRef.current.setNaviteProps({ text: value });
-      // },
-      // clearValue() {
-      //   inputValueRef.current.value = '';
-      //   inputElementRef.current.clear();
-      // },
     });
   }, [fieldName, registerField]);
 
   return (
-    <Container isFocused={isFocused} isErrored={!!error}>
+    <Container isFocused={isFocused} isErrored={!!error} style={containerStyle}>
       <Icon
         name={icon}
         size={20}

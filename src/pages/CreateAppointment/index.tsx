@@ -147,14 +147,21 @@ export const CreateAppointment: React.FC = () => {
         date,
       });
 
-      navigate('AppointmentCreated', { date: date.getTime });
+      const selectedProviderName = providers.find(
+        provider => provider.id === selectedProvider,
+      );
+
+      navigate('AppointmentCreated', {
+        date: date.getTime(),
+        provider: selectedProviderName?.name || 'Cabeleireiro',
+      });
     } catch (err) {
       Alert.alert(
         'Erro ao criar agendamento',
         'Ocorreu um erro ao tentar criar o agendamento. Tente novamente',
       );
     }
-  }, [navigate, selectedDate, selectedHour, selectedProvider]);
+  }, [navigate, selectedDate, selectedHour, selectedProvider, providers]);
 
   return (
     <>
