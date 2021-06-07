@@ -40,16 +40,20 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     (async () => {
-      const token = await AsyncStorage.getItem('@GoBarber:token');
-      const user = await AsyncStorage.getItem('@GoBarber:user');
+      try {
+        const token = await AsyncStorage.getItem('@GoBarber:token');
+        const user = await AsyncStorage.getItem('@GoBarber:user');
 
-      if (token && user) {
-        setData({ token, user: JSON.parse(user) });
+        if (token && user) {
+          setData({ token, user: JSON.parse(user) });
+        }
+
+        api.defaults.headers.authorization = `Bearer ${token}`;
+
+        setLoading(false);
+      } catch(err) {
+        signOut();
       }
-
-      api.defaults.headers.authorization = `Bearer ${token}`;
-
-      setLoading(false);
     })();
   }, []);
 

@@ -45,6 +45,8 @@ const SignUp: React.FC = () => {
           password: Yup.string().min(8, 'Mínimo de 8 dígitos'),
         });
 
+        console.log(data);
+
         await schema.validate(data, {
           abortEarly: false,
         });

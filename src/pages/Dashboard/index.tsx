@@ -32,7 +32,7 @@ const Dashboard: React.FC = () => {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { navigate } = useNavigation();
 
   const navigateToProfile = useCallback(() => {
@@ -40,11 +40,15 @@ const Dashboard: React.FC = () => {
   }, [navigate]);
 
   useEffect(() => {
-    api.get('/providers').then(response => {
-      setProviders(response.data);
-      setLoading(false);
-    });
-  }, []);
+    try {
+      api.get('/providers').then(response => {
+        setProviders(response.data);
+        setLoading(false);
+      });
+    } catch (err) {
+      signOut();
+    }
+  }, [signOut]);
 
   const navigateToCreateAppointment = useCallback(
     (providerId: string) => {
